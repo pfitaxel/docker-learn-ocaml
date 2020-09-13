@@ -11,13 +11,12 @@ services:
       FROM_DOMAIN: "backend.localdomain"
       # (alpine msmtp variable) hostname of the SMTP server:
       SMTPSERVER: "postfix"
-      # (ocaml + alpine msmtp variable) Reply-To = Return-Path:
-      EMAIL: "noreply@example.com"
+    env_file:
+      - reply-to.env
     depends_on:
       - postfix
     volumes:
-      # TODO: replace with absolute path of learn-ocaml repository
-      - ./demo-repository:/repository:ro
+      - ${LEARNOCAML_REPO}:/repository:ro
       - learn-ocaml-sync:/sync
     networks:
       - learnocaml-net
@@ -31,13 +30,13 @@ services:
     container_name: postfix
     image: juanluisbaptiste/postfix
     environment:
-      # (postfix variables) remote MTA credentials:
-      SMTP_SERVER: "smtp.example.com"
-      SMTP_USERNAME: "user@example.com"
-      SMTP_PASSWORD_FILE: "/secrets/smtp_password"
+      ALWAYS_ADD_MISSING_HEADERS: "yes"
       # (postfix variable) DNS of myself, the server sending mails:
       SERVER_HOSTNAME: "mail.localdomain"
-      ALWAYS_ADD_MISSING_HEADERS: "yes"
+      # (postfix variable) remote MTA credentials:
+      SMTP_PASSWORD_FILE: "/secrets/smtp_password"
+    env_file:
+      - smtp.env
     volumes:
       - "./secrets:/secrets"
     networks:
