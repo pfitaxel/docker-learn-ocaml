@@ -25,7 +25,8 @@ services:
 
   learnocaml:
     container_name: backend
-    image: ocamlsf/learn-ocaml:0.13
+    # image: ocamlsf/learn-ocaml:0.13
+    image: pfitaxel/learn-ocaml:staging
     environment:
       # (ocaml variable) <container_name>.<network_name>:
       FROM_DOMAIN: "backend.localdomain"
