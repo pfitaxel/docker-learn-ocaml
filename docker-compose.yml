@@ -33,6 +33,7 @@ services:
       # (alpine msmtp variable) hostname of the SMTP server:
       SMTPSERVER: "postfix"
     env_file:
+      - root-url.env
       - reply-to.env
     depends_on:
       - postfix
