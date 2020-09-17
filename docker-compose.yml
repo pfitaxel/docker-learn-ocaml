@@ -15,7 +15,8 @@ services:
       # TODO => uncomment next line after a successful deployment test
       # STAGE: 'production'
       NUMBITS: '4096'
-      ACCESS_LOG: 'on'
+      ACCESS_LOG: 'stdout'
+      ERROR_LOG: 'stderr'
     networks:
       - learnocaml-net
     depends_on:
