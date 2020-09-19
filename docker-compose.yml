@@ -18,7 +18,7 @@ services:
       ACCESS_LOG: 'stdout'
       ERROR_LOG: 'stderr'
     networks:
-      - learnocaml-net
+      - proxy-net
     depends_on:
       - learnocaml
     logging:
@@ -42,10 +42,9 @@ services:
       - ${LEARNOCAML_REPO}:/repository:ro
       - learn-ocaml-sync:/sync
     networks:
+      - proxy-net
       - learnocaml-net
     restart: unless-stopped
-    networks:
-      - learnocaml-net
     logging:
       driver: "journald"
 
@@ -74,6 +73,8 @@ volumes:
     driver: local
 
 networks:
+  proxy-net:
+    driver: bridge
   learnocaml-net:
     driver: bridge
     name: localdomain
